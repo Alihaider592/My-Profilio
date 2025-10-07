@@ -8,12 +8,11 @@ export default function About() {
 
   useEffect(() => {
     setIsVisible(true)
-    // Delay skills animation
     setTimeout(() => setSkillsVisible(true), 500)
   }, [])
 
   return (
-    <section className="py-20 px-6 min-h-screen">
+    <section id="about" className="py-20 px-6 min-h-screen">
       <div className="max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Column - Section Header */}

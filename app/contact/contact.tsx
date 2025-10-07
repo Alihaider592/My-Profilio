@@ -52,7 +52,7 @@ export default function ContactPage() {
   }
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-br from-background via-background to-muted/20 backdrop-blur-sm">
+    <section id="contact" className="py-20 px-6 bg-gradient-to-br from-background via-background to-muted/20 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 items-start">
 
         {/* Left Section - Animated Text */}

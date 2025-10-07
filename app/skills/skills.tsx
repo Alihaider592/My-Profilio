@@ -88,7 +88,7 @@ export default function Skills() {
   }, [])
 
   return (
-    <section className="py-20 px-6 min-h-screen">
+    <section id="skills" className="py-20 px-6 min-h-screen">
       <div className="max-w-6xl mx-auto">
         <div
           className={`text-center space-y-4 mb-16 transition-all duration-1000 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"}`}

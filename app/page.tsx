@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button"
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react"
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import About from "./about/about"
+import Skills from "./skills/skills"
+import Projects from "./projects/projects"
+import ContactPage from "./contact/contact"
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false)
@@ -13,8 +17,8 @@ export default function Home() {
   }, [])
 
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+    <section className="min-h-screen max-w-6xl mx-auto flex-col flex items-center justify-center px-6 overflow-hidden">
+      <div className="max-w-6xl mx-auto mb-5 mt-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content */}
           <div
@@ -115,6 +119,10 @@ export default function Home() {
           </div>
         </div>
       </div>
+        <Projects/>
+        <Skills/>
+        <About/>
+        <ContactPage/>
     </section>
   )
 }

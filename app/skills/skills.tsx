@@ -2,9 +2,19 @@
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
-const skillCategories = [
+type Skill = {
+  name: string
+  level: number
+}
+
+type SkillCategory = {
+  title: string
+  skills: Skill[]
+}
+
+const skillCategories: SkillCategory[] = [
   {
     title: "Frontend Technologies",
     skills: [
@@ -65,7 +75,7 @@ const skillCategories = [
   },
 ]
 
-const additionalSkills = [
+const additionalSkills: string[] = [
   "Responsive Web Design",
   "Web Accessibility (a11y)",
   "Performance Optimization",
@@ -82,30 +92,78 @@ const additionalSkills = [
 
 export default function Skills() {
   const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  // Trigger animation manually
+  const triggerAnimation = () => setIsVisible(true)
+  const resetAnimation = () => setIsVisible(false)
 
   useEffect(() => {
-    setIsVisible(true)
+    // Intersection Observer for scroll-based animation
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            triggerAnimation()
+          } else {
+            resetAnimation()
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+
+    if (sectionRef.current) observer.observe(sectionRef.current)
+
+    return () => {
+      if (sectionRef.current) observer.unobserve(sectionRef.current)
+    }
+  }, [])
+
+  // Trigger animation when navbar link is clicked
+  useEffect(() => {
+    const handleNavClick = (e: Event) => {
+      const target = e.target as HTMLAnchorElement
+      if (target && target.getAttribute("href") === "#skills") {
+        setTimeout(() => triggerAnimation(), 100)
+      }
+    }
+
+    document.querySelectorAll("a[href='#skills']").forEach((link) => {
+      link.addEventListener("click", handleNavClick)
+    })
+
+    return () => {
+      document.querySelectorAll("a[href='#skills']").forEach((link) => {
+        link.removeEventListener("click", handleNavClick)
+      })
+    }
   }, [])
 
   return (
-    <section id="skills" className="py-20 px-6 min-h-screen">
+    <section id="skills" ref={sectionRef} className="py-20 px-6 min-h-screen">
       <div className="max-w-6xl mx-auto">
         <div
-          className={`text-center space-y-4 mb-16 transition-all duration-1000 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"}`}
+          className={`text-center space-y-4 mb-16 transition-all duration-1000 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
+          }`}
         >
           <h1 className="text-3xl md:text-4xl font-bold text-balance">Skills & Expertise</h1>
           <div
-            className={`h-1 bg-primary rounded-full mx-auto transition-all duration-1000 delay-300 ${isVisible ? "w-16" : "w-0"}`}
+            className={`h-1 bg-primary rounded-full mx-auto transition-all duration-1000 delay-300 ${
+              isVisible ? "w-16" : "w-0"
+            }`}
           ></div>
           <p
-            className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+            className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+            }`}
           >
             A comprehensive overview of my technical skills and proficiency levels across various Full-Stack Development, MERN Stack, Front-End, Back-End
             and development tools.
           </p>
         </div>
 
-        {/* Skill Categories with Progress Bars */}
         <div className="grid lg:grid-cols-3 gap-8 mb-16">
           {skillCategories.map((category, index) => (
             <Card
@@ -127,9 +185,7 @@ export default function Skills() {
                     </div>
                     <div className="w-full bg-secondary rounded-full h-2">
                       <div
-                        className={`bg-primary h-2 rounded-full transition-all duration-1500 ease-out ${
-                          isVisible ? `w-[${skill.level}%]` : "w-0"
-                        }`}
+                        className={`bg-primary h-2 rounded-full transition-all duration-1500 ease-out`}
                         style={{
                           width: isVisible ? `${skill.level}%` : "0%",
                           transitionDelay: `${index * 200 + skillIndex * 100 + 1000}ms`,
@@ -143,15 +199,18 @@ export default function Skills() {
           ))}
         </div>
 
-        {/* Additional Skills as Badges */}
         <div className="space-y-8">
           <h2
-            className={`text-2xl font-semibold text-center transition-all duration-1000 delay-1000 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+            className={`text-2xl font-semibold text-center transition-all duration-1000 delay-1000 ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+            }`}
           >
             Additional Competencies
           </h2>
           <div
-            className={`flex flex-wrap justify-center gap-3 transition-all duration-1000 delay-1200 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+            className={`flex flex-wrap justify-center gap-3 transition-all duration-1000 delay-1200 ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+            }`}
           >
             {additionalSkills.map((skill, index) => (
               <Badge
@@ -166,9 +225,10 @@ export default function Skills() {
           </div>
         </div>
 
-        {/* Skills Summary */}
         <div
-          className={`mt-16 grid md:grid-cols-3 gap-8 text-center transition-all duration-1000 delay-1600 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+          className={`mt-16 grid md:grid-cols-3 gap-8 text-center transition-all duration-1000 delay-1600 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+          }`}
         >
           <div className="space-y-2">
             <div className="text-3xl font-bold text-primary">6+</div>

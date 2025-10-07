@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -13,10 +13,63 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState("")
+
+  // Animation states
   const [isVisible, setIsVisible] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+
+  // Trigger animation manually
+  const triggerAnimation = () => {
+    setIsVisible(true)
+  }
+
+  // Reset animation
+  const resetAnimation = () => {
+    setIsVisible(false)
+  }
 
   useEffect(() => {
-    setIsVisible(true)
+    // Intersection Observer for scroll-based animation
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            triggerAnimation()
+          } else {
+            resetAnimation()
+          }
+        })
+      },
+      { threshold: 0.5 }
+    )
+
+    if (sectionRef.current) observer.observe(sectionRef.current)
+
+    return () => {
+      if (sectionRef.current) observer.unobserve(sectionRef.current)
+    }
+  }, [])
+
+  // Trigger animation when navbar link is clicked
+  useEffect(() => {
+    const handleNavClick = (e: Event) => {
+      const target = e.target as HTMLAnchorElement
+      if (target && target.getAttribute("href") === "#contact") {
+        setTimeout(() => {
+          triggerAnimation()
+        }, 100) // Small delay to allow scroll
+      }
+    }
+
+    document.querySelectorAll("a[href='#contact']").forEach((link) => {
+      link.addEventListener("click", handleNavClick)
+    })
+
+    return () => {
+      document.querySelectorAll("a[href='#contact']").forEach((link) => {
+        link.removeEventListener("click", handleNavClick)
+      })
+    }
   }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -52,7 +105,11 @@ export default function ContactPage() {
   }
 
   return (
-    <section id="contact" className="py-20 px-6 bg-gradient-to-br from-background via-background to-muted/20 backdrop-blur-sm">
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="py-20 px-6 bg-gradient-to-br from-background via-background to-muted/20 backdrop-blur-sm"
+    >
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 items-start">
 
         {/* Left Section - Animated Text */}
@@ -107,10 +164,7 @@ export default function ContactPage() {
                   <Button onClick={() => setIsSubmitted(false)}>Send Another Message</Button>
                 </div>
               ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  className="space-y-6"
-                >
+                <form onSubmit={handleSubmit} className="space-y-6">
                   {error && <p className="text-destructive text-sm">{error}</p>}
 
                   <div className={`space-y-2 transition-all duration-700 delay-500 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}>

@@ -23,7 +23,7 @@ export function Navigation() {
       <div className="max-w-6xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="font-mono text-lg font-semibold hover:text-primary transition-colors">
-            Malik
+            M.Ali Haider
           </Link>
 
           {/* Desktop Navigation */}

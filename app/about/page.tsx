@@ -31,24 +31,19 @@ export default function About() {
               <p
                 className={`text-lg transition-all duration-1000 delay-500 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
               >
-                I'm a passionate frontend developer with a keen eye for detail and a love for creating seamless user
-                experiences. My journey in web development started with curiosity about how websites work, and it has
-                evolved into a career focused on building accessible, performant applications.
+                I'm a passionate Full Stack Developer with a strong eye for detail and a love for creating seamless, efficient web applications. My journey in web development began with curiosity about how websites function and has grown into a career focused on building accessible, performant, and scalable solutions.
               </p>
 
               <p
                 className={`transition-all duration-1000 delay-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
               >
-                Currently, I specialize in modern JavaScript frameworks and have extensive experience with React,
-                Next.js, and TypeScript. I believe in writing clean, maintainable code and staying up-to-date with the
-                latest web technologies and best practices.
+                I specialize in the MERN stack and modern JavaScript frameworks, with extensive experience in React, Next.js, Node.js, MongoDB, and TypeScript. I believe in writing clean, maintainable code and continuously staying up-to-date with the latest technologies, design patterns, and best practices.
               </p>
 
               <p
                 className={`transition-all duration-1000 delay-900 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
               >
-                When I'm not coding, you can find me exploring new design trends, contributing to open-source projects,
-                or sharing knowledge with the developer community through blog posts and mentoring.
+                Beyond coding, I enjoy exploring new design and development trends, contributing to open-source projects, and sharing knowledge with the developer community through blogging, mentoring, and collaborative projects.
               </p>
             </div>
           </div>
@@ -147,13 +142,13 @@ export default function About() {
                   className={`flex items-center gap-3 transition-all duration-700 delay-1200 ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"}`}
                 >
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                  <span>3+ years of professional frontend development</span>
+                  <span>6+ years of professional frontend development</span>
                 </div>
                 <div
                   className={`flex items-center gap-3 transition-all duration-700 delay-1400 ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"}`}
                 >
                   <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-200"></div>
-                  <span>10+ successful project deliveries</span>
+                  <span>3+ successful project deliveries</span>
                 </div>
                 <div
                   className={`flex items-center gap-3 transition-all duration-700 delay-1600 ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"}`}

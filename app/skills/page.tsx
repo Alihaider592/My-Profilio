@@ -10,10 +10,21 @@ const skillCategories = [
     skills: [
       { name: "HTML5", level: 95 },
       { name: "CSS3", level: 92 },
-      { name: "JavaScript", level: 90 },
+      { name: "JavaScript (ES6+)", level: 90 },
       { name: "TypeScript", level: 85 },
-      { name: "React", level: 92 },
+      { name: "React.js", level: 92 },
       { name: "Next.js", level: 88 },
+    ],
+  },
+  {
+    title: "Backend Technologies",
+    skills: [
+      { name: "Node.js", level: 88 },
+      { name: "Express.js", level: 85 },
+      { name: "Next.js API Routes", level: 82 },
+      { name: "RESTful APIs", level: 90 },
+      { name: "Authentication (JWT, NextAuth)", level: 85 },
+      { name: "GraphQL (Basics)", level: 70 },
     ],
   },
   {
@@ -21,36 +32,50 @@ const skillCategories = [
     skills: [
       { name: "Tailwind CSS", level: 94 },
       { name: "Sass/SCSS", level: 80 },
-      { name: "CSS Modules", level: 75 },
-      { name: "Styled Components", level: 70 },
-      { name: "Figma", level: 65 },
-      { name: "Adobe XD", level: 60 },
+      { name: "CSS Modules", level: 78 },
+      { name: "Styled Components", level: 72 },
+      { name: "Figma", level: 68 },
     ],
   },
   {
     title: "Tools & Workflow",
     skills: [
-      { name: "Git", level: 88 },
-      { name: "Webpack", level: 70 },
+      { name: "Git & GitHub", level: 90 },
+      { name: "VS Code", level: 95 },
       { name: "Vite", level: 82 },
-      { name: "ESLint", level: 85 },
-      { name: "Prettier", level: 90 },
-      { name: "Jest", level: 75 },
+      { name: "Webpack", level: 70 },
+      { name: "ESLint & Prettier", level: 88 },
+      { name: "Jest / React Testing Library", level: 75 },
+    ],
+  },
+  {
+    title: "Deployment & DevOps",
+    skills: [
+      { name: "Vercel", level: 92 },
+      { name: "CI/CD Pipelines (GitHub Actions)", level: 75 },
+      { name: "Linux / CLI", level: 80 },
+    ],
+  },
+  {
+    title: "Databases & ORMs",
+    skills: [
+      { name: "MongoDB", level: 86 },
+      { name: "Mongoose", level: 84 },
     ],
   },
 ]
 
 const additionalSkills = [
-  "Responsive Design",
+  "Responsive Web Design",
   "Web Accessibility (a11y)",
   "Performance Optimization",
   "SEO Best Practices",
   "Progressive Web Apps",
-  "API Integration",
-  "State Management",
-  "Component Libraries",
-  "Version Control",
-  "Agile Methodology",
+  "RESTful API Integration",
+  "State Management (Redux, Context API, etc.)",
+  "UI Component Libraries",
+  "Version Control (Git, GitHub)",
+  "Agile & Scrum Methodologies",
   "Cross-browser Testing",
   "Mobile-first Development",
 ]
@@ -75,7 +100,7 @@ export default function Skills() {
           <p
             className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
           >
-            A comprehensive overview of my technical skills and proficiency levels across various frontend technologies
+            A comprehensive overview of my technical skills and proficiency levels across various Full-Stack Development, MERN Stack, Front-End, Back-End
             and development tools.
           </p>
         </div>
@@ -146,15 +171,15 @@ export default function Skills() {
           className={`mt-16 grid md:grid-cols-3 gap-8 text-center transition-all duration-1000 delay-1600 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
         >
           <div className="space-y-2">
-            <div className="text-3xl font-bold text-primary">3+</div>
-            <div className="text-muted-foreground">Years Experience</div>
+            <div className="text-3xl font-bold text-primary">6+</div>
+            <div className="text-muted-foreground">months Experience</div>
           </div>
           <div className="space-y-2">
             <div className="text-3xl font-bold text-primary">15+</div>
             <div className="text-muted-foreground">Technologies Mastered</div>
           </div>
           <div className="space-y-2">
-            <div className="text-3xl font-bold text-primary">50+</div>
+            <div className="text-3xl font-bold text-primary">5+</div>
             <div className="text-muted-foreground">Projects Completed</div>
           </div>
         </div>

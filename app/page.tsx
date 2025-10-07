@@ -22,18 +22,17 @@ export default function Home() {
           >
             <div className="space-y-4">
               <h1 className="text-4xl md:text-6xl font-bold text-balance">
-                Hi, I'm <span className="text-primary animate-pulse">Malik</span>
+                Hi, I'm <span className="text-primary animate-pulse">Ali Haider</span>
               </h1>
               <h2
                 className={`text-xl md:text-2xl text-muted-foreground font-mono transition-all duration-1000 delay-300 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
               >
-                Frontend Developer
+                Full-Stack Developer
               </h2>
               <p
                 className={`text-lg text-muted-foreground leading-relaxed max-w-lg transition-all duration-1000 delay-500 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
               >
-                I build accessible, pixel-perfect digital experiences for the web. Passionate about crafting thoughtful
-                interfaces that blend design with robust engineering.
+                "I build scalable, accessible, and pixel-perfect digital experiences across the web. Passionate about crafting thoughtful interfaces and robust back-end systems, I blend design with engineering to deliver end-to-end solutions that truly work."
               </p>
             </div>
 
@@ -49,7 +48,7 @@ export default function Home() {
               <Button
                 variant="outline"
                 size="lg"
-                className="hover:scale-105 transition-all duration-300 bg-transparent"
+                className="hover:scale-105 transition-all hover:text-primary/90 duration-300 bg-transparent"
               >
                 Download CV
               </Button>
@@ -65,7 +64,7 @@ export default function Home() {
                 asChild
                 className="hover:scale-110 hover:rotate-12 transition-all duration-300"
               >
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/Alihaider592" target="_blank" rel="noopener noreferrer">
                   <Github className="h-5 w-5" />
                   <span className="sr-only">GitHub</span>
                 </a>
@@ -76,7 +75,7 @@ export default function Home() {
                 asChild
                 className="hover:scale-110 hover:rotate-12 transition-all duration-300"
               >
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/ali-haider-719451378/" target="_blank" rel="noopener noreferrer">
                   <Linkedin className="h-5 w-5" />
                   <span className="sr-only">LinkedIn</span>
                 </a>
@@ -87,7 +86,7 @@ export default function Home() {
                 asChild
                 className="hover:scale-110 hover:rotate-12 transition-all duration-300"
               >
-                <a href="mailto:malik@example.com">
+                <a href="alicoder592@gmail.com">
                   <Mail className="h-5 w-5" />
                   <span className="sr-only">Email</span>
                 </a>

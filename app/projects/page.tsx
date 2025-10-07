@@ -83,14 +83,14 @@ export default function Projects() {
         <div
           className={`text-center space-y-4 mb-16 transition-all duration-1000 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"}`}
         >
-          <h1 className="text-3xl md:text-4xl font-bold text-balance">Featured Projects</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-balance">Full-Stack Projects</h1>
           <div
             className={`h-1 bg-primary rounded-full mx-auto transition-all duration-1000 delay-300 ${isVisible ? "w-16" : "w-0"}`}
           ></div>
           <p
             className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
           >
-            A collection of projects that showcase my skills in frontend development, from interactive web applications
+            A collection of projects that showcase my skills in Full-Stack Development, MERN Stack, Front-End, Back-End from interactive web applications
             to responsive design implementations.
           </p>
         </div>
@@ -247,7 +247,7 @@ export default function Projects() {
             variant="outline"
             size="lg"
             asChild
-            className="hover:scale-105 transition-all duration-300 group bg-transparent"
+            className="hover:scale-105 transition-all hover:text-primary/90 duration-300 group bg-transparent"
           >
             <a href="https://github.com/malik" target="_blank" rel="noopener noreferrer">
               <Github className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform duration-300" />

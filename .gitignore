@@ -57,3 +57,7 @@ dist
 
 # Build
 *.log
+node_modules/
+.next/
+dist/
+.env

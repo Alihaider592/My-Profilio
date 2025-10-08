@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 type Skill = {
   name: string
@@ -92,14 +92,21 @@ const additionalSkills: string[] = [
 
 export default function Skills() {
   const [isVisible, setIsVisible] = useState(false)
+  const [skillsVisible, setSkillsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
-  // Trigger animation manually
-  const triggerAnimation = () => setIsVisible(true)
-  const resetAnimation = () => setIsVisible(false)
+  const triggerAnimation = () => {
+    setIsVisible(true)
+    setTimeout(() => setSkillsVisible(true), 500)
+  }
 
+  const resetAnimation = () => {
+    setIsVisible(false)
+    setSkillsVisible(false)
+  }
+
+  // Scroll-based animations
   useEffect(() => {
-    // Intersection Observer for scroll-based animation
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -110,7 +117,7 @@ export default function Skills() {
           }
         })
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     )
 
     if (sectionRef.current) observer.observe(sectionRef.current)
@@ -120,7 +127,7 @@ export default function Skills() {
     }
   }, [])
 
-  // Trigger animation when navbar link is clicked
+  // Navbar click trigger
   useEffect(() => {
     const handleNavClick = (e: Event) => {
       const target = e.target as HTMLAnchorElement
@@ -143,6 +150,7 @@ export default function Skills() {
   return (
     <section id="skills" ref={sectionRef} className="py-20 px-6 min-h-screen">
       <div className="max-w-6xl mx-auto">
+        {/* Section Header */}
         <div
           className={`text-center space-y-4 mb-16 transition-all duration-1000 ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
@@ -164,6 +172,7 @@ export default function Skills() {
           </p>
         </div>
 
+        {/* Skill Cards */}
         <div className="grid lg:grid-cols-3 gap-8 mb-16">
           {skillCategories.map((category, index) => (
             <Card
@@ -187,7 +196,7 @@ export default function Skills() {
                       <div
                         className={`bg-primary h-2 rounded-full transition-all duration-1500 ease-out`}
                         style={{
-                          width: isVisible ? `${skill.level}%` : "0%",
+                          width: skillsVisible ? `${skill.level}%` : "0%",
                           transitionDelay: `${index * 200 + skillIndex * 100 + 1000}ms`,
                         }}
                       ></div>
@@ -199,6 +208,7 @@ export default function Skills() {
           ))}
         </div>
 
+        {/* Additional Skills Badges */}
         <div className="space-y-8">
           <h2
             className={`text-2xl font-semibold text-center transition-all duration-1000 delay-1000 ${
@@ -209,7 +219,7 @@ export default function Skills() {
           </h2>
           <div
             className={`flex flex-wrap justify-center gap-3 transition-all duration-1000 delay-1200 ${
-              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+              skillsVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >
             {additionalSkills.map((skill, index) => (
@@ -225,14 +235,15 @@ export default function Skills() {
           </div>
         </div>
 
+        {/* Summary */}
         <div
           className={`mt-16 grid md:grid-cols-3 gap-8 text-center transition-all duration-1000 delay-1600 ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
           <div className="space-y-2">
-            <div className="text-3xl font-bold text-primary">6+</div>
-            <div className="text-muted-foreground">months Experience</div>
+            <div className="text-3xl font-bold text-primary">1+</div>
+            <div className="text-muted-foreground">year Experience</div>
           </div>
           <div className="space-y-2">
             <div className="text-3xl font-bold text-primary">15+</div>

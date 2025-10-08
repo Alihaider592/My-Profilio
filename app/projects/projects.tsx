@@ -4,9 +4,19 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { ExternalLink, Github } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
-const projects = [
+type Project = {
+  title: string
+  description: string
+  image?: string
+  tech: string[]
+  liveUrl: string
+  githubUrl: string
+  featured: boolean
+}
+
+const projects: Project[] = [
   {
     title: "E-Commerce Dashboard",
     description:
@@ -62,10 +72,10 @@ const projects = [
 export default function Projects() {
   const [isVisible, setIsVisible] = useState(false)
   const [cardsVisible, setCardsVisible] = useState<boolean[]>([])
+  const sectionRef = useRef<HTMLElement>(null)
 
-  useEffect(() => {
+  const triggerAnimation = () => {
     setIsVisible(true)
-    // Stagger card animations
     projects.forEach((_, index) => {
       setTimeout(() => {
         setCardsVisible((prev) => {
@@ -73,32 +83,85 @@ export default function Projects() {
           newState[index] = true
           return newState
         })
-      }, index * 200)
+      }, index * 200 + 300) // stagger animation
     })
+  }
+
+  const resetAnimation = () => {
+    setIsVisible(false)
+    setCardsVisible([])
+  }
+
+  // Scroll-based animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            triggerAnimation()
+          } else {
+            resetAnimation()
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    if (sectionRef.current) observer.observe(sectionRef.current)
+
+    return () => {
+      if (sectionRef.current) observer.unobserve(sectionRef.current)
+    }
+  }, [])
+
+  // Navbar click animation
+  useEffect(() => {
+    const handleNavClick = (e: Event) => {
+      const target = e.target as HTMLAnchorElement
+      if (target && target.getAttribute("href") === "#projects") {
+        setTimeout(() => triggerAnimation(), 100)
+      }
+    }
+
+    document.querySelectorAll("a[href='#projects']").forEach((link) => {
+      link.addEventListener("click", handleNavClick)
+    })
+
+    return () => {
+      document.querySelectorAll("a[href='#projects']").forEach((link) => {
+        link.removeEventListener("click", handleNavClick)
+      })
+    }
   }, [])
 
   return (
-    <section id="projects" className="py-20 px-6 min-h-screen ">
+    <section id="projects" ref={sectionRef} className="py-20 px-6 min-h-screen">
       <div className="max-w-6xl mx-auto">
+        {/* Section Header */}
         <div
-          className={`text-center space-y-4 mb-16 transition-all duration-1000 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"}`}
+          className={`text-center space-y-4 mb-16 transition-all duration-1000 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
+          }`}
         >
           <h1 className="text-3xl md:text-4xl font-bold text-balance">Full-Stack Projects</h1>
           <div
-            className={`h-1 bg-primary rounded-full mx-auto transition-all duration-1000 delay-300 ${isVisible ? "w-16" : "w-0"}`}
-          ></div>
+            className={`h-1 bg-primary rounded-full mx-auto transition-all duration-1000 delay-300 ${
+              isVisible ? "w-16" : "w-0"
+            }`}
+          />
           <p
-            className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+            className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+            }`}
           >
-            A collection of projects that showcase my skills in Full-Stack Development, MERN Stack, Front-End, Back-End from interactive web applications
-            to responsive design implementations.
+            A collection of projects that showcase my Full-Stack skills from interactive web apps to responsive designs.
           </p>
         </div>
 
         {/* Featured Projects */}
         <div className="grid lg:grid-cols-2 gap-8 mb-12">
           {projects
-            .filter((project) => project.featured)
+            .filter((p) => p.featured)
             .map((project, index) => (
               <Card
                 key={index}
@@ -162,18 +225,20 @@ export default function Projects() {
             ))}
         </div>
 
-        {/* Other Projects Grid */}
+        {/* More Projects */}
         <div className="space-y-8">
           <h2
-            className={`text-2xl font-semibold text-center transition-all duration-1000 delay-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+            className={`text-2xl font-semibold text-center transition-all duration-1000 delay-700 ${
+              isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
+            }`}
           >
             More Projects
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects
-              .filter((project) => !project.featured)
+              .filter((p) => !p.featured)
               .map((project, index) => {
-                const adjustedIndex = index + 2 // Account for featured projects
+                const adjustedIndex = index + projects.filter((p) => p.featured).length
                 return (
                   <Card
                     key={index}
@@ -209,23 +274,13 @@ export default function Projects() {
                         ))}
                       </div>
                       <div className="flex gap-2">
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="p-2 hover:scale-110 transition-transform duration-200"
-                          asChild
-                        >
+                        <Button size="sm" variant="ghost" className="p-2 hover:scale-110 transition-transform duration-200" asChild>
                           <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="h-4 w-4" />
                             <span className="sr-only">Live Demo</span>
                           </a>
                         </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="p-2 hover:scale-110 transition-transform duration-200"
-                          asChild
-                        >
+                        <Button size="sm" variant="ghost" className="p-2 hover:scale-110 transition-transform duration-200" asChild>
                           <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                             <Github className="h-4 w-4" />
                             <span className="sr-only">GitHub Repository</span>
@@ -237,23 +292,6 @@ export default function Projects() {
                 )
               })}
           </div>
-        </div>
-
-        {/* Call to Action */}
-        <div
-          className={`text-center mt-12 transition-all duration-1000 delay-1000 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
-        >
-          <Button
-            variant="outline"
-            size="lg"
-            asChild
-            className="hover:scale-105 transition-all hover:text-primary/90 duration-300 group bg-transparent"
-          >
-            <a href="https://github.com/malik" target="_blank" rel="noopener noreferrer">
-              <Github className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform duration-300" />
-              View All Projects on GitHub
-            </a>
-          </Button>
         </div>
       </div>
     </section>

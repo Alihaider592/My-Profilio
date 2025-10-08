@@ -144,7 +144,7 @@ export default function About() {
               <h3 className="font-semibold">Experience Highlights</h3>
               <div className="space-y-3 text-sm text-muted-foreground">
                 {[
-                  "6+ years of professional frontend development",
+                  "1+ year of professional Full-Stack development",
                   "3+ successful project deliveries",
                   "Strong focus on accessibility and performance",
                   "Active contributor to open-source projects",

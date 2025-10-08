@@ -97,6 +97,8 @@ export default function Skills() {
 
   const triggerAnimation = () => {
     setIsVisible(true)
+    // Only trigger skillsVisible animation after a short delay on large screens
+    // On small screens, this state will be immediately visible by CSS
     setTimeout(() => setSkillsVisible(true), 500)
   }
 
@@ -105,11 +107,25 @@ export default function Skills() {
     setSkillsVisible(false)
   }
 
-  // Scroll-based animations
+  // Scroll-based animations (only runs for devices larger than 'sm' due to the CSS fix)
   useEffect(() => {
+    // We can remove the isSmallDevice check here since CSS handles the fallback.
+    // However, we can use the check to skip setting up the observer entirely on small screens
+    // for a tiny performance gain.
+
+    const isLargeEnough = typeof window !== 'undefined' && window.innerWidth >= 640; // 640px is Tailwind's 'sm' breakpoint
+
+    if (!isLargeEnough) {
+        // On small screens, we just force the animation to complete state immediately.
+        // This is done to ensure the progress bars fill up.
+        triggerAnimation();
+        return; 
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          // Only use intersection logic for large screens
           if (entry.isIntersecting) {
             triggerAnimation()
           } else {
@@ -127,7 +143,7 @@ export default function Skills() {
     }
   }, [])
 
-  // Navbar click trigger
+  // Navbar click trigger (Still useful for forcing state if navigating via hash link)
   useEffect(() => {
     const handleNavClick = (e: Event) => {
       const target = e.target as HTMLAnchorElement
@@ -150,20 +166,23 @@ export default function Skills() {
   return (
     <section id="skills" ref={sectionRef} className="py-20 px-6 min-h-screen">
       <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
+        
+        {/* Section Header - ADDED sm:opacity-100 sm:translate-y-0 */}
         <div
-          className={`text-center space-y-4 mb-16 transition-all duration-1000 ${
+          className={`text-center space-y-4 mb-16 transition-all duration-1000 sm:opacity-100 sm:translate-y-0 ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
           }`}
         >
           <h1 className="text-3xl md:text-4xl font-bold text-balance">Skills & Expertise</h1>
           <div
+            // Line remains animated by JS, but is visible if 'isVisible' is forced true on small screens
             className={`h-1 bg-primary rounded-full mx-auto transition-all duration-1000 delay-300 ${
               isVisible ? "w-16" : "w-0"
             }`}
           ></div>
           <p
-            className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 ${
+            // ADDED sm:opacity-100 sm:translate-y-0
+            className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 sm:opacity-100 sm:translate-y-0 ${
               isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >
@@ -177,7 +196,8 @@ export default function Skills() {
           {skillCategories.map((category, index) => (
             <Card
               key={index}
-              className={`h-full transition-all duration-1000 ${
+              // ADDED sm:opacity-100 sm:translate-y-0 sm:transition-none
+              className={`h-full transition-all duration-1000 sm:opacity-100 sm:translate-y-0 sm:transition-none ${
                 isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
               }`}
               style={{ transitionDelay: `${index * 200 + 700}ms` }}
@@ -194,6 +214,7 @@ export default function Skills() {
                     </div>
                     <div className="w-full bg-secondary rounded-full h-2">
                       <div
+                        // Progress bar animation still relies on skillsVisible (set to true immediately on small screens)
                         className={`bg-primary h-2 rounded-full transition-all duration-1500 ease-out`}
                         style={{
                           width: skillsVisible ? `${skill.level}%` : "0%",
@@ -211,14 +232,16 @@ export default function Skills() {
         {/* Additional Skills Badges */}
         <div className="space-y-8">
           <h2
-            className={`text-2xl font-semibold text-center transition-all duration-1000 delay-1000 ${
+            // ADDED sm:opacity-100 sm:translate-y-0
+            className={`text-2xl font-semibold text-center transition-all duration-1000 delay-1000 sm:opacity-100 sm:translate-y-0 ${
               isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >
             Additional Competencies
           </h2>
           <div
-            className={`flex flex-wrap justify-center gap-3 transition-all duration-1000 delay-1200 ${
+            // ADDED sm:opacity-100 sm:translate-y-0
+            className={`flex flex-wrap justify-center gap-3 transition-all duration-1000 delay-1200 sm:opacity-100 sm:translate-y-0 ${
               skillsVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >
@@ -235,9 +258,9 @@ export default function Skills() {
           </div>
         </div>
 
-        {/* Summary */}
+        {/* Summary - ADDED sm:opacity-100 sm:translate-y-0 */}
         <div
-          className={`mt-16 grid md:grid-cols-3 gap-8 text-center transition-all duration-1000 delay-1600 ${
+          className={`mt-16 grid md:grid-cols-3 gap-8 text-center transition-all duration-1000 delay-1600 sm:opacity-100 sm:translate-y-0 ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >

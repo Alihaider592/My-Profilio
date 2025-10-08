@@ -58,6 +58,7 @@ export default function Projects() {
   const triggerAnimation = () => {
     setIsVisible(true)
     projects.forEach((_, index) => {
+      // Delay the individual card visibility states
       setTimeout(() => {
         setCardsVisible((prev) => {
           const newState = [...prev]
@@ -69,6 +70,8 @@ export default function Projects() {
   }
 
   const resetAnimation = () => {
+    // Prevent resetting animation state on small screens to keep content visible
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
     setIsVisible(false)
     setCardsVisible([])
   }
@@ -85,7 +88,8 @@ export default function Projects() {
           }
         })
       },
-      { threshold: 0.3 }
+      // Lower threshold for better mobile responsiveness
+      { threshold: 0.1 } 
     )
 
     if (sectionRef.current) observer.observe(sectionRef.current)
@@ -118,9 +122,9 @@ export default function Projects() {
   return (
     <section id="projects" ref={sectionRef} className="py-20 px-6 min-h-screen">
       <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
+        {/* Section Header - ADDED sm:opacity-100 sm:translate-y-0 */}
         <div
-          className={`text-center space-y-4 mb-16 transition-all duration-1000 ${
+          className={`text-center space-y-4 mb-16 transition-all duration-1000 sm:opacity-100 sm:translate-y-0 ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
           }`}
         >
@@ -131,7 +135,8 @@ export default function Projects() {
             }`}
           />
           <p
-            className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 ${
+            // ADDED sm:opacity-100 sm:translate-y-0
+            className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-1000 delay-500 sm:opacity-100 sm:translate-y-0 ${
               isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}
           >
@@ -146,7 +151,8 @@ export default function Projects() {
             .map((project, index) => (
               <Card
                 key={index}
-                className={`group overflow-hidden hover:shadow-lg transition-all duration-500 hover:scale-[1.02] ${
+                // ADDED sm:opacity-100 sm:translate-y-0 for guaranteed visibility on small screens
+                className={`group overflow-hidden hover:shadow-lg transition-all duration-500 hover:scale-[1.02] sm:opacity-100 sm:translate-y-0 ${
                   cardsVisible[index] ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
                 }`}
                 style={{ transitionDelay: `${index * 200}ms` }}

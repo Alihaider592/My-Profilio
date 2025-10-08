@@ -25,11 +25,14 @@ export default function ContactPage() {
 
   // Reset animation
   const resetAnimation = () => {
+    // Only reset animation on larger screens to keep content visible on small ones
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
     setIsVisible(false)
   }
 
   useEffect(() => {
     // Intersection Observer for scroll-based animation
+    // Using a lower threshold (0.1) makes the animation trigger more easily on small screens.
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -40,7 +43,8 @@ export default function ContactPage() {
           }
         })
       },
-      { threshold: 0.5 }
+      // Lower threshold for better mobile responsiveness
+      { threshold: 0.1 } 
     )
 
     if (sectionRef.current) observer.observe(sectionRef.current)
@@ -82,6 +86,7 @@ export default function ContactPage() {
     setError("")
 
     try {
+      // NOTE: API call logic is kept as-is, assuming /api/contact exists
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -112,24 +117,33 @@ export default function ContactPage() {
     >
       <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12 items-start">
 
-        {/* Left Section - Animated Text */}
+        {/* Left Section - Animated Text - ADDED sm:opacity-100 sm:translate-x-0 */}
         <div
-          className={`lg:w-1/2 space-y-6 transition-all duration-1000 ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-20 opacity-0"}`}
+          className={`lg:w-1/2 space-y-6 transition-all duration-1000 sm:opacity-100 sm:translate-x-0 ${
+            isVisible ? "translate-x-0 opacity-100" : "-translate-x-20 opacity-0"
+          }`}
         >
           <h2 className="text-4xl font-bold text-balance flex items-center gap-3">
             <MessageSquare className="w-6 h-6 text-primary animate-bounce" />
             Get In Touch
           </h2>
           <div
+            // Line animation still relies on isVisible
             className={`h-1 bg-primary rounded-full w-16 transition-all duration-1000 delay-300 ${isVisible ? "w-16" : "w-0"}`}
           ></div>
 
-          <p className={`text-lg text-muted-foreground leading-relaxed transition-all duration-1000 delay-500 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}>
+          <p 
+            // ADDED sm:opacity-100 sm:translate-y-0
+            className={`text-lg text-muted-foreground leading-relaxed transition-all duration-1000 delay-500 sm:opacity-100 sm:translate-y-0 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+          >
             I’m always excited to collaborate on new projects or help bring ideas to life. Whether you have a project in mind, 
             want to discuss potential opportunities, or simply want to connect and exchange ideas, I would love to hear from you.
           </p>
 
-          <p className={`text-lg text-muted-foreground leading-relaxed transition-all duration-1000 delay-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}>
+          <p 
+            // ADDED sm:opacity-100 sm:translate-y-0
+            className={`text-lg text-muted-foreground leading-relaxed transition-all duration-1000 delay-700 sm:opacity-100 sm:translate-y-0 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+          >
             I specialize in full-stack web development, building modern, responsive, and scalable applications. 
             If you’re looking for someone to help turn your concepts into functional, high-quality projects, 
             whether it’s a personal website, a startup MVP, or a complex application, I’m here to help.
@@ -137,14 +151,17 @@ export default function ContactPage() {
 
           <div className="border-t border-muted-foreground/30 my-4"></div>
 
-          <p className={`text-lg text-muted-foreground leading-relaxed transition-all duration-1000 delay-900 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}>
+          <p 
+            // ADDED sm:opacity-100 sm:translate-y-0
+            className={`text-lg text-muted-foreground leading-relaxed transition-all duration-1000 delay-900 sm:opacity-100 sm:translate-y-0 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
+          >
             I am also available for freelance work, consulting, and collaborations. I enjoy exploring creative solutions, 
             staying up-to-date with the latest technologies, and delivering work that not only meets but exceeds expectations.
           </p>
         </div>
 
-        {/* Right Section - Animated Form */}
-        <div className={`lg:w-1/2 transition-all duration-1000 delay-300 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-20 opacity-0"}`}>
+        {/* Right Section - Animated Form - ADDED sm:opacity-100 sm:translate-x-0 */}
+        <div className={`lg:w-1/2 transition-all duration-1000 delay-300 sm:opacity-100 sm:translate-x-0 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-20 opacity-0"}`}>
           <Card className="shadow-2xl border-0 rounded-2xl bg-gradient-to-br from-background/50 via-background/30 to-muted/10 backdrop-blur-md">
             <CardHeader className="text-center pb-6">
               <CardTitle className="text-2xl sm:text-3xl font-bold flex items-center justify-center gap-2">
@@ -167,7 +184,8 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {error && <p className="text-destructive text-sm">{error}</p>}
 
-                  <div className={`space-y-2 transition-all duration-700 delay-500 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}>
+                  {/* Form fields use sm:opacity-100 sm:translate-x-0 for visibility */}
+                  <div className={`space-y-2 transition-all duration-700 delay-500 sm:opacity-100 sm:translate-x-0 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}>
                     <Label htmlFor="name">Name</Label>
                     <Input
                       id="name"
@@ -179,7 +197,7 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <div className={`space-y-2 transition-all duration-700 delay-700 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}>
+                  <div className={`space-y-2 transition-all duration-700 delay-700 sm:opacity-100 sm:translate-x-0 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}>
                     <Label htmlFor="email">Email</Label>
                     <Input
                       id="email"
@@ -192,7 +210,7 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <div className={`space-y-2 transition-all duration-700 delay-900 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}>
+                  <div className={`space-y-2 transition-all duration-700 delay-900 sm:opacity-100 sm:translate-x-0 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}>
                     <Label htmlFor="message">Message</Label>
                     <Textarea
                       id="message"
@@ -205,7 +223,7 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <div className={`transition-all duration-700 delay-1100 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}>
+                  <div className={`transition-all duration-700 delay-1100 sm:opacity-100 sm:translate-x-0 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}>
                     <Button type="submit" disabled={isSubmitting} className="w-full flex justify-center items-center">
                       {isSubmitting ? (
                         <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></span>

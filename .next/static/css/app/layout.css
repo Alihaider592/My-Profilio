@@ -260,6 +260,9 @@ font-weight: 100 900;
   .invisible {
     visibility: hidden;
   }
+  .visible {
+    visibility: visible;
+  }
   .sr-only {
     position: absolute;
     width: 1px;
@@ -4235,6 +4238,18 @@ font-weight: 100 900;
       max-width: var(--container-sm);
     }
   }
+  .sm\:translate-x-0 {
+    @media (width >= 40rem) {
+      --tw-translate-x: calc(var(--spacing) * 0);
+      translate: var(--tw-translate-x) var(--tw-translate-y);
+    }
+  }
+  .sm\:translate-y-0 {
+    @media (width >= 40rem) {
+      --tw-translate-y: calc(var(--spacing) * 0);
+      translate: var(--tw-translate-x) var(--tw-translate-y);
+    }
+  }
   .sm\:flex-col {
     @media (width >= 40rem) {
       flex-direction: column;
@@ -4326,6 +4341,16 @@ font-weight: 100 900;
     @media (width >= 40rem) {
       font-size: var(--text-lg);
       line-height: var(--tw-leading, var(--text-lg--line-height));
+    }
+  }
+  .sm\:opacity-100 {
+    @media (width >= 40rem) {
+      opacity: 100%;
+    }
+  }
+  .sm\:transition-none {
+    @media (width >= 40rem) {
+      transition-property: none;
     }
   }
   .data-\[state\=open\]\:sm\:slide-in-from-bottom-full {

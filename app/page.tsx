@@ -3,10 +3,13 @@
 import { Button } from "@/components/ui/button"
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react"
 import { useEffect, useState } from "react"
-import Link from "next/link"
+// Note: We only need Link for the social media buttons, but let's keep it imported
+import Link from "next/link" 
+
+// Assuming these are all rendered below the Hero section on the same page
 import About from "./about/about"
 import Skills from "./skills/skills"
-import Projects from "./projects/projects"
+import Projects from "./projects/projects" // The component we need to scroll to
 import ContactPage from "./contact/contact"
 
 export default function Home() {
@@ -16,7 +19,19 @@ export default function Home() {
     setIsVisible(true)
   }, [])
 
+  // **NEW SCROLL FUNCTION FOR "VIEW MY WORK"**
+  const scrollToProjects = () => {
+    // Looks for the section with id="projects" (which is now wrapping your <Projects/> component)
+    const element = document.getElementById("projects")
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  }
+
   return (
+    // Note: The main content is wrapped in a <section>, which is fine.
+    // The rest of the content (Projects, Skills, etc.) is outside this main section, but within the Home function return.
+    <> 
     <section className="min-h-screen max-w-6xl mx-auto flex-col flex items-center justify-center px-6 overflow-hidden">
       <div className="max-w-6xl mx-auto mb-5 mt-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -43,22 +58,35 @@ export default function Home() {
             <div
               className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
             >
-              <Button asChild size="lg" className="group hover:scale-105 transition-all duration-300">
-                <Link href="/projects">
-                  View My Work
-                  <ArrowDown className="ml-2 h-4 w-4 group-hover:translate-y-1 group-hover:animate-bounce transition-transform" />
-                </Link>
+              {/* **FIX 2: VIEW MY WORK BUTTON** Changed Link to a Button calling the scroll function to keep it on the same page.
+              */}
+              <Button 
+                onClick={scrollToProjects} 
+                size="lg" 
+                className="group cursor-pointer hover:scale-105 transition-all duration-300"
+              >
+                View My Work
+                <ArrowDown className="ml-2 h-4 w-4 group-hover:translate-y-1 group-hover:animate-bounce transition-transform" />
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="hover:scale-105 transition-all hover:text-primary/90 duration-300 bg-transparent"
+              
+              {/* **FIX 1: DOWNLOAD CV BUTTON** Changed Button to an <a> tag and applied button styling. 
+              The classes ensure the outline variant and large size styling is maintained.
+              */}
+              <a
+                // CRITICAL: Path must be correct (file in 'public' folder)
+                href="/MY_Resume-10.pdf" 
+                download="Ali_Haider_FullStack_Developer_Resume.pdf"
+                
+                // Shadcn/Tailwind classes for Button (outline, lg size, and custom hover effects)
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 
+                           border border-input h-11 px-8 py-2 text-lg 
+                           hover:scale-105 transition-all hover:text-primary/90 duration-300 bg-transparent"
               >
                 Download CV
-              </Button>
+              </a>
             </div>
 
-            {/* Social Links */}
+            {/* Social Links (No changes needed) */}
             <div
               className={`flex gap-4 pt-4 transition-all duration-1000 delay-900 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
             >
@@ -90,7 +118,7 @@ export default function Home() {
                 asChild
                 className="hover:scale-110 hover:rotate-12 transition-all duration-300"
               >
-                <a href="alicoder592@gmail.com">
+                <a href="mailto:alicoder592@gmail.com">
                   <Mail className="h-5 w-5" />
                   <span className="sr-only">Email</span>
                 </a>
@@ -119,10 +147,17 @@ export default function Home() {
           </div>
         </div>
       </div>
-        <Projects/>
-        <Skills/>
-        <About/>
-        <ContactPage/>
     </section>
+
+    {/* **FIX 2 CONTINUED: WRAP THE PROJECTS COMPONENT WITH THE TARGET ID** This is now a separate section outside the main Hero section, which is cleaner.
+    */}
+    <section id="projects">
+      <Projects/>
+    </section>
+    
+    <Skills/>
+    <About/>
+    <ContactPage/>
+    </>
   )
 }

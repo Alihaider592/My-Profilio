@@ -1,3 +1,5 @@
+// src/components/HeroSection.jsx (or .tsx)
+
 "use client"
 
 import { Button } from "@/components/ui/button"
@@ -11,9 +13,13 @@ export function HeroSection() {
     setIsVisible(true)
   }, [])
 
+  // **FIXED SCROLL FUNCTION**
+  // This function looks for the element with id="projects"
   const scrollToProjects = () => {
+    // Ensure the ID matches the ID you set in your main page/layout
     const element = document.getElementById("projects")
     if (element) {
+      // Use smooth scroll behavior
       element.scrollIntoView({ behavior: "smooth" })
     }
   }
@@ -44,6 +50,7 @@ export function HeroSection() {
             <div
               className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-700 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
             >
+              {/* 1. VIEW MY WORK BUTTON (Scroll function is correct, but requires the target ID) */}
               <Button
                 onClick={scrollToProjects}
                 size="lg"
@@ -52,16 +59,23 @@ export function HeroSection() {
                 View My Work
                 <ArrowDown className="ml-2 h-4 w-4 group-hover:translate-y-1 group-hover:animate-bounce transition-transform" />
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="hover:scale-105 transition-all duration-300 bg-transparent"
+
+              {/* 2. DOWNLOAD CV BUTTON (Path corrected, deployment is required) */}
+              <a 
+                // CRITICAL: Ensure MY_Resume-10.pdf is in the root of your 'public' folder.
+                href="/MY_Resume-10.pdf" 
+                download="Ali_Haider_FullStack_Developer_Resume.pdf" 
+                
+                // Styling that makes the anchor tag look like your desired button
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 
+                           border border-input bg-transparent hover:bg-accent hover:text-accent-foreground h-11 px-8 py-2 text-lg 
+                           hover:scale-105 transition-all duration-300"
               >
                 Download CV
-              </Button>
+              </a>
             </div>
 
-            {/* Social Links */}
+            {/* Social Links - No change needed, they are correct */}
             <div
               className={`flex gap-4 pt-4 transition-all duration-1000 delay-900 ${isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
             >
@@ -93,7 +107,7 @@ export function HeroSection() {
                 asChild
                 className="hover:scale-110 hover:rotate-12 transition-all duration-300"
               >
-                <a href="alicoder592@gmail.com">
+                <a href="mailto:alicoder592@gmail.com">
                   <Mail className="h-5 w-5" />
                   <span className="sr-only">Email</span>
                 </a>

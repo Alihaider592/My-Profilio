@@ -5,7 +5,7 @@ import { ArrowDown, Github, Linkedin, Mail } from "lucide-react"
 import { useEffect, useState } from "react"
 // Note: We only need Link for the social media buttons, but let's keep it imported
 import Link from "next/link" 
-
+import HistoryPage from "./history/page"
 // Assuming these are all rendered below the Hero section on the same page
 import About from "./about/about"
 import Skills from "./skills/skills"
@@ -156,6 +156,7 @@ export default function Home() {
     </section>
     
     <Skills/>
+    <HistoryPage/>
     <About/>
     <ContactPage/>
     </>

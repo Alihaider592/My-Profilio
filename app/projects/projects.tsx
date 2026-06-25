@@ -47,6 +47,26 @@ const projects: Project[] = [
     githubUrl: "https://github.com/malik/task-management",
     featured: true,
   },
+  {
+  title: "Decision Metro",
+  description:
+    "A structured decision-making web application featuring simulated metro line paths for choosing article layouts, media uploads, and responsive publishing routes.",
+  image: "/dec.png",
+  tech: ["Ruby on rails", "SQL", "Cloudinary"],
+  liveUrl: "https://www.decisionmetro.com/",
+  githubUrl: "https://github.com/Alihaider592?tab=repositories",
+  featured: true,
+  },
+  {
+  title: "TrackNest",
+  description:
+    "An all-in-one operations hub designed to streamline workflows, track key business metrics, and optimize daily resource management.",
+  image: "/tracknest.png",
+  tech: ["Next.js", "SQL", "Cloudinary" ,"TypeScript","Chart.js","Tailwind CSS","Strip"],
+  liveUrl: "https://placehold.co/1920x1080/1f2937/ffffff?text=Coming+Soon",
+  githubUrl: "https://github.com/Alihaider592/TrackNest",
+  featured: true,
+  }
   
 ]
 

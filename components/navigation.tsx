@@ -16,6 +16,7 @@ export function Navigation() {
     { href: "#projects", label: "Projects" },
     { href: "#skills", label: "Skills" },
     { href: "#contact", label: "Contact" },
+    { href: "#HistoryPage", label: "Work History" },
   ]
 
   return (
